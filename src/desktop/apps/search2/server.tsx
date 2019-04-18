@@ -1,8 +1,9 @@
-import { stitch } from "@artsy/stitch"
 import express, { Request, Response, NextFunction } from "express"
 import { stringify } from "querystring"
 
 export const app = express()
+app.set("views", __dirname + "/templates")
+app.set("view engine", "jade")
 
 const maybeShowNewPage = (req, _res, next) => {
   const shouldShowNewPage =
@@ -31,16 +32,17 @@ app.get(
     }
 
     try {
-      const layout = await stitch({
-        basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_redesign.jade",
-        locals: {
-          ...res.locals,
-          assetPackage: "search2",
-        },
-      })
+      // const layout = await stitch({
+      //   basePath: __dirname,
+      //   layout: "../../components/main_layout/templates/react_redesign.jade",
+      //   locals: {
+      //     ...res.locals,
+      //     assetPackage: "search2",
+      //   },
+      // })
 
-      res.send(layout)
+      // res.send(layout)
+      res.render("index")
     } catch (error) {
       next(error)
     }

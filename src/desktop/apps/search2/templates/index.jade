@@ -1,0 +1,10 @@
+extends ../../../components/main_layout/templates/redesign
+
+append locals
+  - assetPackage = 'search2'
+
+block body
+  #react-root
+  #search-skeleton
+    if stitch
+      != stitch.components.SearchSkeleton()

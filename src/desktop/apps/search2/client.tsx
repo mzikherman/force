@@ -3,6 +3,7 @@ import { routes } from "reaction/Apps/Search/routes"
 import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
+import $ from "jquery"
 
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -14,6 +15,7 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
+    $("#search-skeleton").remove()
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
   })
   .catch(error => {
