@@ -12,6 +12,9 @@ import { searchMiddleware } from "./apps/search/searchMiddleware"
 
 export const app = express()
 
+const topLevelMetaRoute = getAppRoutes()[0]
+const allRoutes = topLevelMetaRoute.children.map(child => child.path)
+
 /**
  * Mount non-Reaction routes that are relevant to specific global router routes
  */
@@ -21,7 +24,7 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  * Mount routes that will connect to global SSR router
  */
 app.get(
-  "/*",
+  allRoutes,
   userRequiredMiddleware,
 
   /**
