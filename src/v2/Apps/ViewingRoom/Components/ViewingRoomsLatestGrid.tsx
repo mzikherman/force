@@ -2,15 +2,15 @@ import React from "react"
 import { Box } from "@artsy/palette"
 import {
   RelayPaginationProp,
-  createPaginationContainer,
+  createFragmentContainer,
   graphql,
 } from "react-relay"
 
-import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
+import { ViewingRoomsLatestGrid_viewingRoomsConnection } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRoomsConnection.graphql"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
-  viewingRooms: ViewingRoomsLatestGrid_viewingRooms
+  viewingRoomsConnection: ViewingRoomsLatestGrid_viewingRoomsConnection
 }
 
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
@@ -20,17 +20,16 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
   return <Box>Hello World</Box>
 }
 
-export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer(
+export const ViewingRoomsLatestGridFragmentContainer = createFragmentContainer(
   ViewingRoomsLatestGrid,
   {
-    viewingRooms: graphql`
-      fragment ViewingRoomsLatestGrid_viewingRooms on Query
+    viewingRoomsConnection: graphql`
+      fragment ViewingRoomsLatestGrid_viewingRoomsConnection on Viewer
         @argumentDefinitions(
-          count: { type: "Int" }
+          count: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
-        viewingRooms(first: $count, after: $after)
-          @connection(key: "ViewingRoomsLatestGrid_viewingRooms") {
+        viewingRoomsConnection(first: $count, after: $after) {
           edges {
             node {
               slug
@@ -58,36 +57,6 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
             }
           }
         }
-      }
-    `,
-  },
-  {
-    direction: "forward",
-    getConnectionFromProps(props) {
-      return props.viewingRooms
-    },
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
-    },
-    getVariables(props, { count, cursor }, fragmentVariables) {
-      return {
-        // in most cases, for variables other than connection filters like
-        // `first`, `after`, etc. you may want to use the previous values.
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
-      query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(
-        $count: Int!
-        $after: String
-      ) {
-        ...ViewingRoomsApp_allViewingRooms
-          @arguments(count: $count, after: $after)
       }
     `,
   }

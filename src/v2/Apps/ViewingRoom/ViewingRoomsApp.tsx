@@ -3,20 +3,17 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Sans, Separator, breakpoints } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer as ViewingRoomsLatestGrid } from "./Components/ViewingRoomsLatestGrid"
 import { Footer } from "v2/Components/Footer"
-import { ViewingRoomsApp_allViewingRooms } from "v2/__generated__/ViewingRoomsApp_allViewingRooms.graphql"
-import { ViewingRoomsApp_featuredViewingRooms } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
-import { ViewingRoomsFeaturedRailFragmentContainer as ViewingRoomsFeaturedRail } from "./Components/ViewingRoomsFeaturedRail"
+import { ViewingRoomsApp_viewer } from "v2/__generated__/ViewingRoomsApp_viewer.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomsAppProps {
-  allViewingRooms: ViewingRoomsApp_allViewingRooms
-  featuredViewingRooms: ViewingRoomsApp_featuredViewingRooms
+  viewer: ViewingRoomsApp_viewer
 }
 
 const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
   console.log("FROM APP")
   console.log(props)
-  const { allViewingRooms, featuredViewingRooms } = props
+  const { viewer } = props
   return (
     <AppContainer maxWidth="100%">
       <Box maxWidth={breakpoints.xl} mx="auto" width="100%">
@@ -24,10 +21,7 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
           <Sans size="10" my={3}>
             Viewing Rooms
           </Sans>
-          <ViewingRoomsFeaturedRail
-            featuredViewingRooms={featuredViewingRooms}
-          />
-          <ViewingRoomsLatestGrid viewingRooms={allViewingRooms} />
+          <ViewingRoomsLatestGrid viewingRoomsConnection={viewer} />
         </Box>
       </Box>
       <Box mx={2}>
@@ -41,19 +35,9 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
 export const ViewingRoomsAppFragmentContainer = createFragmentContainer(
   ViewingRoomsApp,
   {
-    allViewingRooms: graphql`
-      fragment ViewingRoomsApp_allViewingRooms on Query
-        @argumentDefinitions(
-          count: { type: "Int" }
-          after: { type: "String" }
-        ) {
-        ...ViewingRoomsLatestGrid_viewingRooms
-          @arguments(count: $count, after: $after)
-      }
-    `,
-    featuredViewingRooms: graphql`
-      fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
-        ...ViewingRoomsFeaturedRail_featuredViewingRooms
+    viewer: graphql`
+      fragment ViewingRoomsApp_viewer on Viewer {
+        ...ViewingRoomsLatestGrid_viewingRoomsConnection
       }
     `,
   }

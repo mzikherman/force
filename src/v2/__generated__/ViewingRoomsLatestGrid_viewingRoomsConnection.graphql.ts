@@ -2,8 +2,8 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsLatestGrid_viewingRooms = {
-    readonly viewingRooms: {
+export type ViewingRoomsLatestGrid_viewingRoomsConnection = {
+    readonly viewingRoomsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly slug: string;
@@ -29,12 +29,12 @@ export type ViewingRoomsLatestGrid_viewingRooms = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "ViewingRoomsLatestGrid_viewingRooms";
+    readonly " $refType": "ViewingRoomsLatestGrid_viewingRoomsConnection";
 };
-export type ViewingRoomsLatestGrid_viewingRooms$data = ViewingRoomsLatestGrid_viewingRooms;
-export type ViewingRoomsLatestGrid_viewingRooms$key = {
-    readonly " $data"?: ViewingRoomsLatestGrid_viewingRooms$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
+export type ViewingRoomsLatestGrid_viewingRoomsConnection$data = ViewingRoomsLatestGrid_viewingRoomsConnection;
+export type ViewingRoomsLatestGrid_viewingRoomsConnection$key = {
+    readonly " $data"?: ViewingRoomsLatestGrid_viewingRoomsConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsLatestGrid_viewingRoomsConnection">;
 };
 
 
@@ -49,26 +49,15 @@ var v0 = [
 ];
 return {
   "kind": "Fragment",
-  "name": "ViewingRoomsLatestGrid_viewingRooms",
-  "type": "Query",
-  "metadata": {
-    "connection": [
-      {
-        "count": "count",
-        "cursor": "after",
-        "direction": "forward",
-        "path": [
-          "viewingRooms"
-        ]
-      }
-    ]
-  },
+  "name": "ViewingRoomsLatestGrid_viewingRoomsConnection",
+  "type": "Viewer",
+  "metadata": null,
   "argumentDefinitions": [
     {
       "kind": "LocalArgument",
       "name": "count",
       "type": "Int",
-      "defaultValue": null
+      "defaultValue": 10
     },
     {
       "kind": "LocalArgument",
@@ -80,10 +69,21 @@ return {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "viewingRooms",
-      "name": "__ViewingRoomsLatestGrid_viewingRooms_connection",
+      "alias": null,
+      "name": "viewingRoomsConnection",
       "storageKey": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
+        {
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "count"
+        }
+      ],
       "concreteType": "ViewingRoomConnection",
       "plural": false,
       "selections": [
@@ -247,47 +247,8 @@ return {
                       ]
                     }
                   ]
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "__typename",
-                  "args": null,
-                  "storageKey": null
                 }
               ]
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "cursor",
-              "args": null,
-              "storageKey": null
-            }
-          ]
-        },
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "name": "pageInfo",
-          "storageKey": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "endCursor",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "hasNextPage",
-              "args": null,
-              "storageKey": null
             }
           ]
         }
@@ -296,5 +257,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '025d79be76418b0283592d200cd9d2a6';
+(node as any).hash = 'f4401da9df0b3f4497d17ae4a7da44a8';
 export default node;
