@@ -14,6 +14,7 @@ import { ShowContextualLinkFragmentContainer as ShowContextualLink } from "./Com
 import { ShowViewingRoom } from "./Components/ShowViewingRoom"
 import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworks } from "./Components/ShowArtworks"
+import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -74,6 +75,10 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
           <Separator as="hr" my={3} />
 
+          <ShowContextCard show={show} />
+
+          <Separator as="hr" my={3} />
+
           <Footer />
         </HorizontalPadding>
       </AppContainer>
@@ -126,6 +131,7 @@ export default createFragmentContainer(ShowApp, {
           sizes: $sizes
           sort: $sort
         )
+      ...ShowContextCard_show
     }
   `,
 })

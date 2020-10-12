@@ -7,7 +7,7 @@ export type ShowApp_show = {
     readonly name: string | null;
     readonly about: string | null;
     readonly pressRelease: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show">;
+    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -230,9 +230,14 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "ShowArtworks_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowContextCard_show"
     }
   ],
   "type": "Show"
 };
-(node as any).hash = '8a8c365bcf78731ae0be88369ffef7c6';
+(node as any).hash = 'c731c965356d7ebc2e216c22551d709c';
 export default node;
